@@ -1,0 +1,26 @@
+{
+  "name": "animated-doodle",
+  "version": "1.0.0",
+  "description": "hello world RagingScout95 is pro player. ;)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AbhijeetTakle/animated-doodle.git"
+  },
+  "author": "Abhijeet Takle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AbhijeetTakle/animated-doodle/issues"
+  },
+  "homepage": "https://github.com/AbhijeetTakle/animated-doodle#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "mongoose": "^6.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
