@@ -4,7 +4,8 @@
   "description": "hello world RagingScout95 is pro player. ;)",
   "main": "server.js",
   "scripts": {
-    "start": "node server"
+    "start": "node server",
+    "startdev": "nodemon server"
   },
   "repository": {
     "type": "git",
