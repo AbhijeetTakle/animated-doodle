@@ -1,8 +1,6 @@
 const { userModel } = require("../models/usersmodel");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
-const { response } = require("express");
-const e = require("express");
 
 const createUser = async (req, res) => {
   const username = req.body.username;
