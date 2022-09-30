@@ -45,5 +45,4 @@ router
     );
     res.json(response);
   });
-
 module.exports = { router };
