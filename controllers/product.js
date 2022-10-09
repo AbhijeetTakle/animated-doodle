@@ -16,6 +16,7 @@ const createProduct = async (req, res) => {
   const productdescription = req.body.productdescription;
   const productspecs = req.body.productspecs;
   const category = req.body.category;
+  const productimages = req.body.productimages;
 
   await (async () => {
     var newproduct = new productModel({
@@ -26,6 +27,7 @@ const createProduct = async (req, res) => {
       productowner,
       productdescription,
       productspecs,
+      productimages,
       category,
     });
 
