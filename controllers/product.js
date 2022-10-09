@@ -2,9 +2,8 @@ const productModel = require("../models/productmodel");
 const mongoose = require("mongoose");
 
 const getProduct = async (req, res) => {
-  const productRequired = await productModel.findOne({
-    __id: req.params.product,
-  });
+  req.params.product = mongoose.Types.ObjectId(req.params.product);
+  const productRequired = await productModel.findById(req.params.product);
   res.json(productRequired);
 };
 
