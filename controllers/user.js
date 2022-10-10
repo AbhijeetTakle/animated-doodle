@@ -60,8 +60,8 @@ const deleteUser = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
+  const email = req.params.email;
+  const password = req.params.password;
   const user = await userModel.findOne({
     email: email,
   });
@@ -73,12 +73,12 @@ const getUser = async (req, res) => {
         result: user,
       });
     } else {
-      res.status(404).json({
+      res.json({
         message: "Wrong Username or password",
       });
     }
   } else {
-    res.status(404).json({
+    res.json({
       message: "User Not Registered",
     });
   }
