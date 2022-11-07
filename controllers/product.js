@@ -1,4 +1,4 @@
-const productModel = require("../models/productmodel");
+const { productModel } = require("../models/productmodel");
 const mongoose = require("mongoose");
 
 const getProduct = async (req, res) => {
@@ -54,7 +54,7 @@ const deleteProduct = async (req, res) => {
 };
 
 const getAllProducts = async (req, res) => {
-  const products = await productModel.find();
+  const products = await productModel.find({});
   res.json(products);
 };
 
