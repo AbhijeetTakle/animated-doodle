@@ -1,4 +1,5 @@
 const userModel = require("../models/usersmodel");
+const adminModel = require("../models/adminmodel");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 
@@ -13,15 +14,25 @@ const createUser = async (req, res) => {
   await (async () => {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-    var newuser = new userModel({
-      _id: mongoose.Types.ObjectId(),
-      username,
-      password: hash,
-      email,
-      phone,
-      address,
-      admin,
-    });
+    if (admin) {
+      var newuser = new adminModel({
+        _id: mongoose.Types.ObjectId(),
+        username,
+        password: hash,
+        email,
+        phone,
+        address,
+      });
+    } else {
+      var newuser = new userModel({
+        _id: mongoose.Types.ObjectId(),
+        username,
+        password: hash,
+        email,
+        phone,
+        address,
+      });
+    }
 
     newuser
       .save()

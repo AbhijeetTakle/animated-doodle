@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { productSchema } = require("./productmodel");
 
-const userSchema = new mongoose.Schema({
+const adminSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: {
     type: String,
@@ -22,9 +22,9 @@ const userSchema = new mongoose.Schema({
       unique: true,
     },
   },
-  cart: [productSchema],
+  catalog: [productSchema],
 });
 
-const userModel = mongoose.model("Users", userSchema);
+const adminModel = mongoose.model("Admins", adminSchema);
 
-module.exports = userModel;
+module.exports = adminModel;
