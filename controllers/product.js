@@ -58,4 +58,22 @@ const getAllProducts = async (req, res) => {
   res.json(products);
 };
 
-module.exports = { getProduct, createProduct, deleteProduct, getAllProducts };
+const getSearchProducts = async (req, res) => {
+  const key = req.params.keyword;
+  const products = await productModel.find({
+    productname: { $regex: ".*" + key + ".*", $options: "i" },
+  });
+  if (products.length == 0) {
+    res.json({ success: false, message: "No Results Found." });
+  } else {
+    res.json({ success: true, message: "Found Results..", products: products });
+  }
+};
+
+module.exports = {
+  getProduct,
+  createProduct,
+  deleteProduct,
+  getAllProducts,
+  getSearchProducts,
+};
