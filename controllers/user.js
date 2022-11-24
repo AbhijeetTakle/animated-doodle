@@ -74,9 +74,11 @@ const deleteUser = async (req, res) => {
 const getUser = async (req, res) => {
   const email = req.params.email;
   const password = req.params.password;
-  const user = await userModel.findOne({
-    email: email,
-  });
+  const user = await userModel
+    .findOne({
+      email: email,
+    })
+    .populate({ path: "cart", select: ["cartproduct"] });
   if (user !== null) {
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (isPasswordCorrect) {
@@ -98,13 +100,36 @@ const getUser = async (req, res) => {
 
 const addToCart = async (req, res) => {
   let user = req.params.user;
+  let productid = req.params.product;
+  user = await userModel.findOne({ _id: user });
+  const product = await productModel.findOne({ _id: productid });
+  const idx = user.cart.findIndex((item) => {
+    return item._id.toString() === productid;
+  });
+  if (idx === -1) {
+    user.cart.push({ cartproduct: product, quantity: 1 });
+    await userModel.updateOne({ _id: user._id }, user);
+    res.json({ message: "add to cart is success." });
+  } else {
+    res.json({ message: "product already in cart." });
+  }
+};
+
+const deleteFromCart = async (req, res) => {
+  let user = req.params.user;
   let product = req.params.product;
 
   user = await userModel.findOne({ _id: user });
-  product = await productModel.findOne({ _id: product });
-  user.cart.push(product);
-  await userModel.updateOne({ _id: user._id }, user);
-  res.json({ message: "add to cart is success." });
+  const idx = user.cart.findIndex((item) => {
+    return item._id.toString() === product;
+  });
+  if (idx === -1) {
+    res.json({ message: "product not in cart" });
+  } else {
+    user.cart.splice(idx, 1);
+    await userModel.updateOne({ _id: user._id }, user);
+    res.json({ message: "remove from cart is success." });
+  }
 };
 
-module.exports = { createUser, deleteUser, getUser, addToCart };
+module.exports = { createUser, deleteUser, getUser, addToCart, deleteFromCart };

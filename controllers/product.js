@@ -1,6 +1,7 @@
 const { productModel } = require("../models/productmodel");
 const mongoose = require("mongoose");
 const { updateAdmin } = require("./admin");
+const { userModel } = require("../models/usersmodel");
 
 const getProduct = async (req, res) => {
   req.params.product = mongoose.Types.ObjectId(req.params.product);
