@@ -132,4 +132,33 @@ const deleteFromCart = async (req, res) => {
   }
 };
 
-module.exports = { createUser, deleteUser, getUser, addToCart, deleteFromCart };
+const addOrder = async (req, res) => {
+  const productownerid = req.params.productowner;
+  const productid = req.params.product;
+  const userid = req.params.user;
+  const productowner = await adminModel.findOne({ _id: productownerid });
+  const user = await userModel.findOne({ _id: userid });
+  const idx = user.cart.findIndex((item) => {
+    return item.cartproduct._id.toString() === productid;
+  });
+  if (idx !== -1) {
+    user.cart.splice(idx, 1);
+    await userModel.updateOne({ _id: user._id }, { cart: user.cart });
+  }
+  const product = await productModel.findOne({ _id: productid });
+  productowner.orders.push({ user: user, product: product });
+  await adminModel.findOneAndUpdate(
+    { _id: productownerid },
+    { orders: productowner.orders }
+  );
+  res.json({ message: "order placed for the item" });
+};
+
+module.exports = {
+  createUser,
+  deleteUser,
+  getUser,
+  addToCart,
+  deleteFromCart,
+  addOrder,
+};

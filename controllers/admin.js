@@ -1,6 +1,8 @@
 const adminModel = require("../models/adminmodel");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const { productModel } = require("../models/productmodel");
+const { userModel } = require("../models/usersmodel");
 
 const deleteAdmin = async (req, res) => {
   const email = req.body.email;
@@ -46,8 +48,8 @@ const getAdmin = async (req, res) => {
   }
 };
 
-const updateAdmin = async (product) => {
-  const productowner = product.productowner;
+const updateAdmin = async (req, res) => {
+  const productowner = req.params.product.productowner;
   const admin = await adminModel.findOne({ _id: productowner });
   let catalog = admin.catalog;
   catalog.push(product);
@@ -55,6 +57,7 @@ const updateAdmin = async (product) => {
     { _id: productowner },
     { catalog: catalog }
   );
+  res.json({ message: "product added to catalog" });
 };
 
 module.exports = { deleteAdmin, getAdmin, updateAdmin };
