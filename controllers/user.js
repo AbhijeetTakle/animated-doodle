@@ -2,6 +2,7 @@ const userModel = require("../models/usersmodel");
 const adminModel = require("../models/adminmodel");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
+const { productModel } = require("../models/productmodel");
 
 const createUser = async (req, res) => {
   const username = req.body.username;
@@ -95,4 +96,15 @@ const getUser = async (req, res) => {
   }
 };
 
-module.exports = { createUser, deleteUser, getUser };
+const addToCart = async (req, res) => {
+  let user = req.params.user;
+  let product = req.params.product;
+
+  user = await userModel.findOne({ _id: user });
+  product = await productModel.findOne({ _id: product });
+  user.cart.push(product);
+  await userModel.updateOne({ _id: user._id }, user);
+  res.json({ message: "add to cart is success." });
+};
+
+module.exports = { createUser, deleteUser, getUser, addToCart };

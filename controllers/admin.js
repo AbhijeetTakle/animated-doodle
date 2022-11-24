@@ -46,4 +46,15 @@ const getAdmin = async (req, res) => {
   }
 };
 
-module.exports = { deleteAdmin, getAdmin };
+const updateAdmin = async (product) => {
+  const productowner = product.productowner;
+  const admin = await adminModel.findOne({ _id: productowner });
+  let catalog = admin.catalog;
+  catalog.push(product);
+  await adminModel.findOneAndUpdate(
+    { _id: productowner },
+    { catalog: catalog }
+  );
+};
+
+module.exports = { deleteAdmin, getAdmin, updateAdmin };

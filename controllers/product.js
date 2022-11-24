@@ -1,5 +1,6 @@
 const { productModel } = require("../models/productmodel");
 const mongoose = require("mongoose");
+const { updateAdmin } = require("./admin");
 
 const getProduct = async (req, res) => {
   req.params.product = mongoose.Types.ObjectId(req.params.product);
@@ -44,6 +45,7 @@ const createProduct = async (req, res) => {
           record: {},
         });
       });
+    updateAdmin(newproduct);
   })();
 };
 
