@@ -104,7 +104,7 @@ const addToCart = async (req, res) => {
   user = await userModel.findOne({ _id: user });
   const product = await productModel.findOne({ _id: productid });
   const idx = user.cart.findIndex((item) => {
-    return item._id.toString() === productid;
+    return item.cartproduct._id.toString() === productid;
   });
   if (idx === -1) {
     user.cart.push({ cartproduct: product, quantity: 1 });
@@ -121,7 +121,7 @@ const deleteFromCart = async (req, res) => {
 
   user = await userModel.findOne({ _id: user });
   const idx = user.cart.findIndex((item) => {
-    return item._id.toString() === product;
+    return item.cartproduct._id.toString() === product;
   });
   if (idx === -1) {
     res.json({ message: "product not in cart" });
